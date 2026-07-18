@@ -1,19 +1,18 @@
 # PathReview Development Journal
 
-## 2026-07-17: Initial Setup & Environment Verification
+## Week 7 — Issue selection
 
-- **Task**: Set up local environment and verify application execution.
-- **Repository Setup**:
-  - Cloned fork and set upstream to `https://github.com/ascherj/pathreview.git`.
-  - Created development branch `fix/47-agent-state-persistence` for Issue #47.
-- **Environment & Database Config**:
-  - Created Python virtual environment (`.venv`) and installed dependencies (`.[dev]`).
-  - Discovered local native PostgreSQL 17 running on port `5432` (instead of docker-compose on `5433`).
-  - Configured PostgreSQL role `pathreview` and created the dev database `pathreview_dev`.
-  - Configured `.env` file to target local port `5432`.
-  - Ran `alembic upgrade head` to apply migrations and populated database with seed data.
-- **Troubleshooting & Fixes**:
-  - Resolved `AttributeError` in `api/routes/health.py` by switching the Redis initialization from non-existent settings properties (`settings.redis_host`, `settings.redis_port`) to `redis.Redis.from_url(settings.redis_url)`.
-- **Verification**:
-  - Verified backend server successfully running on port `8000`.
-  - Verified Vite frontend server successfully running on port `5173` and successfully loading the login page.
+**Issue link:** https://github.com/ascherj/pathreview/issues/47
+
+**Issue title:** Agent state isn't persisted across API restarts, causing in-progress reviews to be lost
+
+**Tier:** [ ] Tier 1  [ ] Tier 2  [x] Tier 3
+
+**Problem summary:**
+Currently, the execution state of the portfolio review agent is stored only in-memory. If the FastAPI backend server restarts or crashes while a review is in progress, all state associated with the active evaluation is lost, and the review must be restarted from scratch. A successful fix will persist the agent's state to a database or cache (such as PostgreSQL or Redis) so that in-progress review sessions can be fully restored and resumed across API restarts.
+
+**Branch name:** fix/47-agent-state-persistence
+
+**Setup confirmation:** [x] App runs locally at localhost:5173
+
+**Cohort ledger:** [x] Issue added to cohort ledger
