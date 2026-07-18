@@ -16,3 +16,11 @@ Currently, the execution state of the portfolio review agent is stored only in-m
 **Setup confirmation:** [x] App runs locally at localhost:5173
 
 **Cohort ledger:** [x] Issue added to cohort ledger
+
+### "Is this right for me?" Checklist & Selection Notes
+
+- **[x] Clear understanding of the problem:** I understand that transient in-memory state needs to be serialized and written to persistent storage (like Redis or PostgreSQL).
+- **[x] Scope and file identification:** The fix will likely affect `api/routes/reviews.py`, database models, and potential middleware or session stores.
+- **[x] Tech stack compatibility:** The database integration relies on SQLAlchemy/asyncpg and Redis, matching my skillset.
+- **[x] Clear verification strategy:** Can be verified by triggering a review, restarting the API, and ensuring it resumes or retains state instead of resetting.
+- **[x] Selection Notes:** This Tier 3 issue is well-scoped for a deeper architectural task. Since we already have Redis and PostgreSQL set up locally, implementing session or state persistence will integrate smoothly into the existing backend structure without introducing unnecessary external dependencies.
