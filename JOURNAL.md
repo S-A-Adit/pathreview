@@ -63,18 +63,16 @@ Currently, the execution state of the portfolio review agent is stored only in-m
 
 ---
 
-## Week 8 — Reproduction and Planning
+## Week 8 — Reproduction & solution planning
 
-**Reproduction Steps:**
-1. Created a unit test `tests/unit/test_orchestrator_reproduction.py`.
-2. Demonstrated that if the orchestrator fails prematurely (simulating a crash), the successful execution of preceding tools is not persisted to the session store.
-3. Added a failing test `test_orchestrator_should_persist_incrementally` that verifies `session_store.set` is called incrementally during `Orchestrator.run`, which fails because it is currently only called once at the end.
+**Reproduction commit link:** https://github.com/ascherj/pathreview/commit/0773240 (Replace with actual pushed commit link)
 
-**Solution Plan:**
-1. **Modify Orchestrator's Tool Execution Loop**: Inside `agent/orchestrator.py` `run` method, update the `session_state` and persist using `session_store.set` after every tool execution.
-2. **Handle Exceptions**: Persist the state incrementally even if an exception occurs inside the execution loop.
-3. **Verify**: Ensure the added failing test `test_orchestrator_should_persist_incrementally` passes, alongside all existing tests.
+**Reproduction summary:**
+I reproduced the issue by creating a unit test with mock tools that crash midway through execution. The test confirmed that since the orchestrator only persists state at the end of the run, all results from previously successful tools were lost, requiring the entire execution to be restarted.
 
-**Risks/Unknowns:**
-- There's a minor performance hit due to increased Redis write operations, but it's acceptable for reliability in long-running tasks.
-- Concurrent updates could cause race conditions, though agent tool execution for a single profile is sequential, so this shouldn't be an issue.
+**PLAN.md link:** https://github.com/ascherj/pathreview/blob/fix/47-agent-state-persistence/PLAN.md (Replace with actual pushed link)
+
+**Walkthrough video (recommended):** N/A
+
+**Blockers or open questions:**
+I have no blockers. I am ready to implement the incremental state persistence during Week 9.
