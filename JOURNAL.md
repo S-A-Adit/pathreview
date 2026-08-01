@@ -96,7 +96,7 @@ None.
 
 **PR link:** https://github.com/ascherj/pathreview/pull/520
 
-**Branch:** `fix/47-orchestrator-state-persistence`
+**Branch:** `fix/47-agent-state-persistence`
 
 **What you built:**
 I moved the session state persistence logic inside the tool execution loop in the agent orchestrator. Now, if the FastAPI server crashes or restarts midway through a long-running review, the progress is safely stored incrementally in Redis and won't be lost.
