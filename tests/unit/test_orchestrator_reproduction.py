@@ -49,12 +49,11 @@ def test_orchestrator_loses_state_on_crash():
         orchestrator.run("profile_1", profile_data)
         
     # The tech_detector tool succeeded before the crash.
-    # However, because session_store.set is only called at the end of the run,
-    # the progress is lost.
+    # We expect its progress to be saved in the session store.
     
-    # This assertion proves the issue: the session store is empty.
-    assert "profile_1" not in session_store.store
-    assert session_store.set_calls == 0
+    assert "profile_1" in session_store.store
+    assert "tech_detector" in session_store.store["profile_1"]
+    assert session_store.set_calls == 1
 
 def test_orchestrator_should_persist_incrementally():
     """
