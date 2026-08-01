@@ -94,7 +94,7 @@ None.
 
 ### Check-in 2 (end of week)
 
-**PR link:** https://github.com/ascherj/pathreview/pull/123
+**PR link:** https://github.com/ascherj/pathreview/pull/520
 
 **Branch:** `fix/47-orchestrator-state-persistence`
 
