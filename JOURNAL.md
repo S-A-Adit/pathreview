@@ -76,3 +76,34 @@ I reproduced the issue by creating a unit test with mock tools that crash midway
 
 **Blockers or open questions:**
 I have no blockers. I am ready to implement the incremental state persistence during Week 9.
+
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+I have implemented the fix for the orchestrator persistence bug. The `Orchestrator.run` method now saves its state incrementally to the Redis store after each tool execution, rather than only at the end. All sub-tasks from the `PLAN.md` are completed.
+
+**Next steps:**
+Submit the PR, respond to any peer review feedback, and ensure that the codebase is completely stable.
+
+**Blockers:**
+None.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** https://github.com/ascherj/pathreview/pull/123
+
+**Branch:** `fix/47-orchestrator-state-persistence`
+
+**What you built:**
+I moved the session state persistence logic inside the tool execution loop in the agent orchestrator. Now, if the FastAPI server crashes or restarts midway through a long-running review, the progress is safely stored incrementally in Redis and won't be lost.
+
+**Tests added or updated:**
+I updated `tests/unit/test_orchestrator_reproduction.py`. The test now asserts that the `tech_detector` tool's progress is successfully saved in the mock session store even when a subsequent tool raises a `KeyboardInterrupt` to simulate a crash.
+
+**Self-review confirmation:** [x] make check passes  [x] make test-unit passes
+
+**Draft PR feedback received from:** none
